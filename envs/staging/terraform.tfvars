@@ -1,0 +1,5 @@
+backend_bucket  = "terraform-state-staging"
+backend_key     = "terraform.tfstate"
+backend_region  = "us-west-2"
+backend_dynamodb_table = "your-terraform-lock-table-staging"
+aws_region = "us-east-1" 

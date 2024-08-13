@@ -1,0 +1,7 @@
+backend_bucket  = "terraform-state-prod"
+backend_key     = "terraform.tfstate"
+backend_region  = "us-west-2"
+backend_dynamodb_table = "your-terraform-lock-table-prod"
+aws_region = "us-east-1" 
+access_key_account = "prod_access_key"
+secret_key_account = "prod_secret_key"

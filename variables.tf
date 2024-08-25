@@ -1,11 +1,11 @@
 variable "remote_state_bucket" {
-  description = "Nom du bucket S3 pour le backend"
+  description = "Name of the S3 bucket for the backend"
   type        = string
   default     = ""
 }
 
 variable "remote_state_key" {
-  description = "Clé S3 pour le fichier de state"
+  description = "S3 key for the state file"
   type        = string
   default     = ""
 }
@@ -13,7 +13,7 @@ variable "remote_state_key" {
 
 
 variable "dynamodb_table" {
-  description = "Table DynamoDB pour le verrouillage de l'état"
+  description = "DynamoDB table for state locking"
   type        = string
   default     = ""
 }

@@ -9,9 +9,8 @@
 
 # AWS Provider configuration
 provider "aws" {
-  profile = "default"
+  profile = "sandbox"
   region  = "us-east-1"
-  
   
 }
 

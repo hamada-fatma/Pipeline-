@@ -49,23 +49,48 @@ variable "load_balancer_name" {
   type        = string
 }
 
-variable "listener_port" {
-  description = "Listener port for the Load Balancer"
-  type        = number
-}
+# variable "listener_port" {
+#   description = "Listener port for the Load Balancer"
+#   type        = number
+# }
 
-variable "target_group_name" {
-  description = "Name of the Target Group"
-  type        = string
-}
+# variable "target_group_name" {
+#   description = "Name of the Target Group"
+#   type        = string
+# }
 
-variable "target_group_port" {
-  description = "Port for the Target Group"
-  type        = number
-}
+# variable "target_group_port" {
+#   description = "Port for the Target Group"
+#   type        = number
+# }
 
 
 variable "vpc_id" {
   description = "The ID of the VPC"
   type        = string
+}
+
+
+#########
+
+variable "target_groups" {
+  description = "Liste des Target Groups avec le nom, le port et le protocole"
+  type = list(object({
+    name     = string
+    port     = number
+    protocol = string
+  }))
+  default = [
+    {
+      name     = "web-traffic-tg"
+      port     = 80
+      protocol = "HTTP"
+    }
+  ]
+}
+
+variable "listener_ports" {
+  description = "Liste des ports pour les listeners"
+  type        = list(number)
+  default     = [80]
 }

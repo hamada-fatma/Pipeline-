@@ -1,39 +1,35 @@
 variable "vpc_cidr_block" {
-  description = "Le bloc CIDR pour le VPC"
+  description = "The CIDR block for the VPC"
   type        = string
   default     = "10.0.0.0/16"
 }
 
 variable "subnet1_cidr_block" {
-  description = "Le bloc CIDR pour le premier sous-réseau"
+  description = "The CIDR block for the first subnet"
   type        = string
   default     = "10.0.1.0/24"
 }
 
 variable "subnet2_cidr_block" {
-  description = "Le bloc CIDR pour le deuxième sous-réseau"
+  description = "The CIDR block for the second subnet"
   type        = string
   default     = "10.0.2.0/24"
 }
 
 variable "security_group_name" {
-  description = "Le nom du groupe de sécurité ECS"
+  description = "The name of the ECS security group"
   type        = string
   default     = "ecs_security_group"
 }
 
 variable "ingress_port" {
-  description = "Le port d'ingress pour le groupe de sécurité"
+  description = "The ingress port for the security group"
   type        = number
   default     = 3000
 }
 
 variable "egress_port" {
-  description = "Le port d'egress pour le groupe de sécurité"
+  description = "The egress port for the security group"
   type        = number
   default     = 0
-}
-variable "vpc_id" {
-  description = "The ID of the VPC where the security group will be created."
-  type        = string
 }

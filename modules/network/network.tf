@@ -23,45 +23,8 @@ resource "aws_subnet" "this2" {
 
 }   
 
-# resource "aws_security_group" "this" {
-#   name   = "ecs_security_group"
-#   vpc_id = aws_vpc.this.id
-
-#   ingress {
-#     from_port   = 80
-#     to_port     = 80
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }
-
-
 
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 }
 #########
-# resource "aws_security_group" "this" {
-#   name   = var.security_group_name
-#   vpc_id = var.vpc_id  # Assurez-vous que le VPC est bien référencé
-#   ingress {
-#     from_port   = 80
-#     to_port     = 80
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-# }

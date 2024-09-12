@@ -61,16 +61,6 @@ resource "aws_lb" "this" {
   subnets            = var.subnets
 }
 
-# resource "aws_lb_listener" "http" {
-#   load_balancer_arn = aws_lb.this.arn
-#   port              = 80
-#   protocol          = "HTTP"
-
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.this.arn
-#   }
-# }
 resource "aws_lb_listener" "http" {
   for_each          = aws_lb_target_group.this
   load_balancer_arn = aws_lb.this.arn
@@ -85,16 +75,6 @@ resource "aws_lb_listener" "http" {
 
 #################
 
-
-
-
-# resource "aws_lb_target_group" "this" {
-#   name        = var.target_group_name
-#   port        = 80
-#   protocol    = "HTTP"
-#   vpc_id      = var.vpc_id
-#   target_type = "ip"
-# }
 resource "aws_lb_target_group" "this" {
   for_each    = { for tg in var.target_groups : tg.name => tg }
   name        = each.value.name
@@ -132,56 +112,13 @@ resource "aws_ecs_task_definition" "this" {
     }
   ])
 
-  execution_role_arn = var.execution_role_arn
-  task_role_arn      = var.task_role_arn
+  #execution_role_arn = var.execution_role_arn
+  execution_role_arn = aws_iam_role.execution.arn
+  #task_role_arn      = var.task_role_arn
+  task_role_arn      = aws_iam_role.task.arn
 }
 
 
-# resource "aws_ecs_service" "this" {
-#   name            = "my-nginx-service"
-#   cluster         = aws_ecs_cluster.this.id
-#   task_definition = aws_ecs_task_definition.this.arn
-#   launch_type     = "FARGATE"
-#   desired_count   = 1
-
-#   network_configuration {
-#     subnets          = var.subnets
-#     security_groups  = var.security_groups
-#     assign_public_ip = true
-#   }
-
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.this.arn
-#     container_name   = "nginx-container"
-#     container_port   = 80
-#   }
-
-#   depends_on = [aws_lb_listener.http]
-# }
-###
-#avant commented from while
-############
-# resource "aws_ecs_service" "this" {
-#   name            = "my-nginx-service"
-#   cluster         = aws_ecs_cluster.this.id
-#   task_definition = aws_ecs_task_definition.this.arn
-#   launch_type     = "FARGATE"
-#   desired_count   = 1
-
-#   network_configuration {
-#     subnets          = var.subnets
-#     security_groups  = [aws_security_group.ecs_sg.id] # Utilise le groupe de sécurité du ECS
-#     assign_public_ip = true
-#   }
-
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.this.arn
-#     container_name   = "nginx-container"
-#     container_port   = 80
-#   }
-#   depends_on = [aws_security_group.lb_sg]
-#   #depends_on = [aws_lb_listener.http]
-# }
 resource "aws_ecs_service" "this" {
   name            = "my-nginx-service"
   cluster         = aws_ecs_cluster.this.id
@@ -199,7 +136,7 @@ resource "aws_ecs_service" "this" {
     for_each = aws_lb_target_group.this
     content {
       target_group_arn = load_balancer.value.arn
-      container_name   = "nginx-container"
+      container_name   = "nginx-container"#variable et kif tayetelha fi west el main et nehot valeur fi west tfvars 
       container_port   = 80 # Remplace par une valeur dynamique si nécessaire
     }
   }
@@ -211,7 +148,6 @@ resource "aws_ecs_service" "this" {
 ############
 resource "aws_security_group" "lb_sg" {
   name   = "lb_security_group"
-  #vpc_id = aws_vpc.this.id
   vpc_id = var.vpc_id  # Utilise la variable vpc_id
 
 
@@ -250,3 +186,4 @@ resource "aws_security_group" "ecs_sg" {
 }
 ####
 
+######################################

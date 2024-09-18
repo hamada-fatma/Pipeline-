@@ -19,7 +19,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  
+        aws-region: us-east-1  # Mettez votre région AWS ici
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
@@ -33,8 +33,8 @@ jobs:
       run: terraform validate
 
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform plan -var-file="./envs/prod/terraform.tfvars"
+
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve
+      run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve

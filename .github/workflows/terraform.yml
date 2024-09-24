@@ -72,17 +72,17 @@ jobs:
           aws-region: us-east-1
 
       - name: Log in to Amazon ECR
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Build and Push Service 1 Image
         run: |
-          docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service1:latest ./service1
-          docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service1:latest
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/service1:latest ./service1
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/service1:latest
 
       - name: Build and Push Service 2 Image
         run: |
-          docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service2:latest ./service2
-          docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service2:latest
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/service2:latest ./service2
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/service2:latest
 
   test:
     name: Run Tests

@@ -1,4 +1,4 @@
-name: Terraform Deployment
+name: ECS Microservices Deployment Pipeline
 
 on:
   push:
@@ -6,35 +6,110 @@ on:
       - main
 
 jobs:
+  lint:
+    name: Lint the code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Linter
+        run: echo "Linter step"
+
+  build:
+    name: Build Docker Images and Push to ECR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Log in to Amazon ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build and Push Service 1 Image
+        run: |
+          docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service1:latest ./service1
+          docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service1:latest
+
+      - name: Build and Push Service 2 Image
+        run: |
+          docker build -t <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service2:latest ./service2
+          docker push <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/service2:latest
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: echo "Tests step"
+
   terraform:
     name: Run Terraform
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  # Mettez votre région AWS ici
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
 
-    - name: Terraform Init
-      run: terraform init
+      - name: Terraform Init
+        run: terraform init
 
-    - name: Terraform Validate
-      run: terraform validate
+      - name: Terraform Validate
+        run: terraform validate
 
-    - name: Terraform Plan
-      run: terraform plan -var-file="./envs/prod/terraform.tfvars"
+      - name: Terraform Plan
+        run: terraform plan -var-file="./envs/prod/terraform.tfvars"
 
+      - name: Terraform Apply
+        run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve
 
-    - name: Terraform Apply
-      run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+    needs: build  # L'étape de déploiement dépend de la réussite de l'étape de build
+    if: github.event.pull_request.merged == true  # Ne déploie que si la pull request est fusionnée dans main
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy Service 1 to ECS
+        run: |
+          aws ecs update-service \
+            --cluster my-ecs-cluster \
+            --service service1-ecs-service \
+            --force-new-deployment
+
+      - name: Deploy Service 2 to ECS
+        run: |
+          aws ecs update-service \
+            --cluster my-ecs-cluster \
+            --service service2-ecs-service \
+            --force-new-deployment

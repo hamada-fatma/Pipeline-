@@ -7,7 +7,8 @@
   subnet2_cidr_block = "10.1.2.0/24"
 
   security_group_name = "web-traffic-sg"
-  ingress_port        = 8080
+  #ingress_port        = 8080
+  ingress_ports       = [8080, 9090]
   egress_port         = 0
 }
 
@@ -28,16 +29,32 @@ module "ecs" {
   load_balancer_name = "web-lb"
 
   # Ajout des nouvelles variables pour gérer plusieurs Target Groups et Listeners
+  # target_groups = [
+  #   {
+  #     name     = "web-traffic-tg"
+  #     port     = 80
+  #     protocol = "HTTP"
+  #   }
+   
+  # ]
+  # Ajout des nouveaux groupes de cibles pour les deux microservices
   target_groups = [
     {
-      name     = "web-traffic-tg"
-      port     = 80
+      name     = "service1-tg"
+      port     = 8080
+      protocol = "HTTP"
+    },
+    {
+      name     = "service2-tg"
+      port     = 9090
       protocol = "HTTP"
     }
-   
   ]
 
-  listener_ports = [80]
+
+  #listener_ports = [80]
+  listener_ports = [8080, 9090]
+
   
 }
 

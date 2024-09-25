@@ -42,3 +42,9 @@ variable "listener_ports" {
   description = "List of listener ports for the Load Balancer"
   type        = list(number)
 }
+
+variable "aws_region" {
+  description = "Région AWS"
+  type        = string
+  default     = "us-east-1"  # Facultatif si vous avez une région par défaut
+}

@@ -17,14 +17,27 @@ execution_role_policy_arn    = "arn:aws:iam::aws:policy/service-role/AmazonECSTa
 load_balancer_name = "web-lb"
 
 # Target Groups et Listeners
-target_groups = [
-  {
-    name     = "web-traffic-tg"
-    port     = 80
-    protocol = "HTTP"
-  }
-]
-listener_ports = [80]
+# target_groups = [
+#   {
+#     name     = "web-traffic-tg"
+#     port     = 80
+#     protocol = "HTTP"
+#   }
+# ]
+  target_groups = [
+    {
+      name     = "service1-tg"
+      port     = 8080
+      protocol = "HTTP"
+    },
+    {
+      name     = "service2-tg"
+      port     = 9090
+      protocol = "HTTP"
+    }
+  ]
+ listener_ports = [8080, 9090]
+#listener_ports = [80]
 
 # Informations réseau
 subnets = ["subnet-01f32a794d5f61d6c", "subnet-002b66f8da426d7bb"]  # Mettez ici vos IDs de sous-réseaux si connus

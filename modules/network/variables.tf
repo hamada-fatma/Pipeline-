@@ -22,14 +22,15 @@ variable "security_group_name" {
   default     = "ecs_security_group"
 }
 
-variable "ingress_port" {
-  description = "The ingress port for the security group"
-  type        = number
-  default     = 3000
-}
-
 variable "egress_port" {
   description = "The egress port for the security group"
   type        = number
   default     = 0
+}
+
+# # Variable pour les ports d'ingress
+variable "ingress_ports" {
+  description = "Liste des ports autorisés pour l'accès entrant"
+  type        = list(number)
+  default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
 }

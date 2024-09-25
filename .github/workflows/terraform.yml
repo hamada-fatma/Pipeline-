@@ -103,13 +103,13 @@ jobs:
       - name: Deploy Service 1 to ECS
         run: |
           aws ecs update-service \
-            --cluster my-ecs-cluster \
+            --cluster app-deployment-cluster \
             --service service1-ecs-service \
             --force-new-deployment
 
       - name: Deploy Service 2 to ECS
         run: |
           aws ecs update-service \
-            --cluster my-ecs-cluster \
+            --cluster app-deployment-cluster \
             --service service2-ecs-service \
             --force-new-deployment

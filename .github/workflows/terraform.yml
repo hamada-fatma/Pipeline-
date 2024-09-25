@@ -104,7 +104,7 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster app-deployment-cluster \
-            --service my-nginx-service\
+            --service my-nginx-service \
             --force-new-deployment
 
       - name: Deploy Service 2 to ECS

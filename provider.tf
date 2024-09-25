@@ -17,10 +17,6 @@ provider "aws" {
 
 
 
-#  resource "aws_ecr_repository" "my_app_repo" {
-#    name = "projet1/node-app"
-#  }
-
 resource "aws_ecr_repository" "service1" {
   name = "service1"
 }

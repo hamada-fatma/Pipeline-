@@ -39,6 +39,4 @@ module "ecs" {
 
   listener_ports = [80]
   
-
 }
-

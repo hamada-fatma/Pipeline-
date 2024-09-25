@@ -35,14 +35,9 @@ variable "egress_port" {
   description = "The egress port for the security group"
   type        = number
   default     = 0
-  
+
 }
 
-# # Variable pour l'ID du compte AWS
-# variable "aws_account_id" {
-#   description = "ID du compte AWS"
-#   type        = string
-# }
 
 
 # # Variable pour les ports d'ingress

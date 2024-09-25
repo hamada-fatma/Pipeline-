@@ -1,12 +1,6 @@
- variable "aws_account_id" {
-  description = "ID du compte AWS"
-  type        = string
-}
-
  module "network" {
   source = "./modules/network"
 
-  aws_account_id = "339712918863"  # Ajout de l'argument requis
   vpc_cidr_block     = "10.1.0.0/16"
   subnet1_cidr_block = "10.1.1.0/24"
   subnet2_cidr_block = "10.1.2.0/24"
@@ -22,6 +16,7 @@ module "ecs" {
   source = "./modules/ecs"
 
   # Network Inputs
+  aws_account_id = "339712918863"  # Ajout de l'argument requis
   subnets         = module.network.subnet_ids
   vpc_id          = module.network.vpc_id
 

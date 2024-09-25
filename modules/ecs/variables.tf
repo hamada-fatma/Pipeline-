@@ -48,3 +48,16 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"  # Facultatif si vous avez une région par défaut
 }
+######
+variable "aws_account_id" {
+  description = "ID du compte AWS"
+  type        = string
+}
+
+
+# Variable pour les ports d'ingress
+variable "ingress_ports" {
+  description = "Liste des ports autorisés pour l'accès entrant"
+  type        = list(number)
+  default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
+}

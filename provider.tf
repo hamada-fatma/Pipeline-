@@ -17,6 +17,7 @@ provider "aws" {
 
 
 
+
 resource "aws_ecr_repository" "service1" {
   name = "service1"
 }

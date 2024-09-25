@@ -42,3 +42,17 @@ variable "listener_ports" {
   description = "List of listener ports for the Load Balancer"
   type        = list(number)
 }
+
+variable "aws_account_id" {
+  description = "ID du compte AWS"
+  type        = string
+}
+
+
+# Variable pour les ports d'ingress
+variable "ingress_ports" {
+  description = "Liste des ports autorisés pour l'accès entrant"
+  type        = list(number)
+  default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
+}
+

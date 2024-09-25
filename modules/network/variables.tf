@@ -35,6 +35,7 @@ variable "egress_port" {
   description = "The egress port for the security group"
   type        = number
   default     = 0
+  
 }
 
 # # Variable pour l'ID du compte AWS

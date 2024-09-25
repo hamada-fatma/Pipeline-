@@ -22,6 +22,7 @@ variable "security_group_name" {
   default     = "ecs_security_group"
 }
 
+
 variable "egress_port" {
   description = "The egress port for the security group"
   type        = number

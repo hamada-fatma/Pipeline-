@@ -30,15 +30,6 @@ module "ecs" {
   load_balancer_name = "web-lb"
 
   # Ajout des nouvelles variables pour gérer plusieurs Target Groups et Listeners
-  # target_groups = [
-  #   {
-  #     name     = "web-traffic-tg"
-  #     port     = 80
-  #     protocol = "HTTP"
-  #   }
-   
-  # ]
-  # Ajout des nouveaux groupes de cibles pour les deux microservices
   target_groups = [
     {
       name     = "service1-tg"
@@ -53,7 +44,6 @@ module "ecs" {
   ]
 
 
-  #listener_ports = [80]
   listener_ports = [8080, 9090]
 
   

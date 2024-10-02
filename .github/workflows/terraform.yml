@@ -52,11 +52,13 @@ jobs:
       - name: Run Tests
         run: echo "Tests step"
 
-
   deploy:
     name: Deploy to ECS
     runs-on: ubuntu-latest
     needs: build  # L'étape de déploiement dépend de la réussite de l'étape de build
+    strategy:
+      matrix:
+        service_name: ['service1', 'service2']  # Liste de tous les services
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -68,13 +70,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Register Task Definition
+        run: |
+          # Assurez-vous de créer un fichier JSON pour la définition de tâche avant cette étape
+          # Remplacez 'task-definition.json' par votre propre fichier de définition
+          aws ecs register-task-definition --cli-input-json file://task-definition.json
+
       - name: Deploy Services to ECS
         run: |
           aws ecs update-service \
             --cluster app-deployment-cluster \
-            --service service1-ecs-service \
+            --service ${{ matrix.service_name }}-ecs-service \
             --force-new-deployment
-          aws ecs update-service \
-            --cluster app-deployment-cluster \
-            --service service2-ecs-service \
-            --force-new-deployment
+

@@ -127,16 +127,31 @@ resource "aws_ecs_service" "this" {
 }
 
 ############
+
 resource "aws_security_group" "lb_sg" {
   name   = "lb_security_group"
   vpc_id = var.vpc_id  # Utilise la variable vpc_id
 
-
+  # Autorise le trafic entrant sur les ports 80, 8080, et 9090
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 80
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 8080
+  }
+
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 9090
   }
 
   egress {
@@ -146,6 +161,7 @@ resource "aws_security_group" "lb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
 resource "aws_security_group" "ecs_sg" {
   name   = "ecs_security_group"
   vpc_id = var.vpc_id  # Utilisation de la variable vpc_id

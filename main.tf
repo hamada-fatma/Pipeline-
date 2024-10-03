@@ -16,7 +16,7 @@ module "network" {
 module "ecs" {
   source = "./modules/ecs"
 
-  aws_account_id = "381492126797"  # Ajout de l'argument requis
+  aws_account_id = "471112939810"  # Ajout de l'argument requis
   # Network Inputs
   subnets         = module.network.subnet_ids
   vpc_id          = module.network.vpc_id

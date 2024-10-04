@@ -73,14 +73,23 @@ resource "aws_lb_listener" "http" {
   }
 }
 resource "aws_lb_target_group" "this" {
-  #for_each    = { for service in var.microservices : service.app_name => service }
-  for_each          = { for idx, service in var.microservices : service.app_name => service }
+  for_each    = { for idx, service in var.microservices : service.app_name => service }
   name        = "${each.value.app_name}-tg"
   port        = each.value.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
+
+  health_check {
+    path                = "/health"   # Chemin personnalisé pour vérifier la santé de l'application
+    protocol            = "HTTP"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
 }
+
 resource "aws_ecs_task_definition" "this" {
   for_each                = { for idx, service in var.microservices : service.app_name => service }  
   family                  = "${each.value.app_name}-app"

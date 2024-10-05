@@ -8,7 +8,7 @@ module "network" {
 
   security_group_name = "web-traffic-sg"
   #ingress_port        = 8080
-  ingress_ports       = [8080, 9090]
+  ingress_ports       = [80, 9090]
   egress_port         = 0
 }
 

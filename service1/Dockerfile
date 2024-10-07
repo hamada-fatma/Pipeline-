@@ -15,4 +15,4 @@ FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Exposer le port 8080
-EXPOSE 9090
+EXPOSE 80

@@ -3,8 +3,5 @@
 
 FROM nginx:latest
 
-# Copier le fichier nginx.conf personnalisé
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Exposer le port 9090
+# Exposer le port 8080 au lieu du port par défaut 80
 EXPOSE 9090

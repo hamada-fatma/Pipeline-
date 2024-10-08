@@ -64,8 +64,8 @@ resource "aws_lb" "this" {
 resource "aws_lb_listener" "http" {
   for_each          = aws_lb_target_group.this
   load_balancer_arn = aws_lb.this.arn
-  #port              = each.value.port
-  port              = 80
+  port              = each.value.port
+  #port              = 80
   protocol          = each.value.protocol
 
   default_action {
@@ -76,8 +76,8 @@ resource "aws_lb_listener" "http" {
 resource "aws_lb_target_group" "this" {
   for_each    = { for idx, service in var.microservices : service.app_name => service }
   name        = "${each.value.app_name}-tg"
- # port        = each.value.container_port
-  port        = 9090
+  port        = each.value.container_port
+ # port        = 9090
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
@@ -131,8 +131,8 @@ resource "aws_ecs_service" "this" {
   load_balancer {
     target_group_arn = aws_lb_target_group.this[each.key].arn
     container_name   = each.value.app_name
-    #container_port   = each.value.container_port
-     container_port   = 9090
+    container_port   = each.value.container_port
+   #  container_port   = 9090
   }
 
   depends_on = [aws_lb_listener.http]

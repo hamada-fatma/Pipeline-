@@ -33,7 +33,7 @@ module "ecs" {
   target_groups = [
     {
       name     = "service1-tg"
-      port     = 9090
+      port     = 80
       protocol = "HTTP"
     }
    

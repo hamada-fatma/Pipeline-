@@ -3,6 +3,9 @@
 # Utiliser l'image Nginx officielle
 FROM nginx:latest
 
+COPY nginx.conf /etc/nginx/
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
 # Exposer le port 8080 au lieu du port par défaut 80
 #EXPOSE 80
 

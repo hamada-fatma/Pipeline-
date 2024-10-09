@@ -37,7 +37,7 @@ module "ecs" {
       protocol = "HTTP"
     },
 {
-      name     = "service1-tg"
+      name     = "service2-tg"
       port     = 8080
       protocol = "HTTP"
     }

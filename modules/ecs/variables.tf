@@ -78,7 +78,7 @@ variable "microservices" {
       memory         = 512
     },
  {
-      app_name       = "service1"
+      app_name       = "service2"
       container_port = 80
       host_port      = 8080
       cpu            = 256

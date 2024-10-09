@@ -8,7 +8,7 @@ module "network" {
 
   security_group_name = "web-traffic-sg"
   #ingress_port        = 8080
-  ingress_ports       = [9090,80]
+  ingress_ports       = [8080,80]
   egress_port         = 0
 }
 
@@ -35,12 +35,17 @@ module "ecs" {
       name     = "service1-tg"
       port     = 80
       protocol = "HTTP"
+    },
+{
+      name     = "service1-tg"
+      port     = 8080
+      protocol = "HTTP"
     }
    
   ]
 
 
-  listener_ports = [80]
+  listener_ports = [80,8080]
 
   
 }

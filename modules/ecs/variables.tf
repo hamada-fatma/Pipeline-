@@ -72,17 +72,11 @@ variable "microservices" {
   default = [
     {
       app_name       = "service1"
-      container_port = 80
-      host_port      = 80
-      cpu            = 256
-      memory         = 512
-    },
- {
-      app_name       = "service2"
-      container_port = 80
+      container_port = 8080
       host_port      = 8080
       cpu            = 256
       memory         = 512
-    }
+    },
+
   ]
 }

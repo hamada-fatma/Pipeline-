@@ -151,7 +151,12 @@ resource "aws_security_group" "lb_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 80
   }
-
+  ingress {
+    from_port   = 80
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 80
+  }
  
   egress {
     from_port   = 0

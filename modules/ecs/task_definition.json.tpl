@@ -1,7 +1,7 @@
 [
   {
     "name": "${container_name}",
-    "image": "${{secrets.aws_account_id}}.dkr.ecr.${aws_region}.amazonaws.com/${app_name}:latest",
+    "image": "${aws_account_id}.dkr.ecr.${aws_region}.amazonaws.com/${app_name}:latest",
     "cpu": ${cpu},
     "memory": ${memory},
     "essential": true,

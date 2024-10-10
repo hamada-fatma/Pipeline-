@@ -102,7 +102,7 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = templatefile("${path.module}/task_definition.json.tpl", {
     container_name = each.value.app_name
-    aws_account_id = var.aws_account_id
+    #aws_account_id = var.aws_account_id
     aws_region     = var.aws_region
     app_name       = each.value.app_name
     cpu            = each.value.cpu

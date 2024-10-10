@@ -44,7 +44,7 @@ module "ecs" {
   ]
 
 
-  listener_ports = [80,8080]
+  listener_ports = [80,8080,9090]
 
   
 }

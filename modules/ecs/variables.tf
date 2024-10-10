@@ -77,6 +77,12 @@ variable "microservices" {
       cpu            = 256
       memory         = 512
     },
-
+   {
+      app_name       = "service2"
+      container_port = 9090
+      host_port      = 9090
+      cpu            = 256
+      memory         = 512
+    }
   ]
 }

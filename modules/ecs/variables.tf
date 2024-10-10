@@ -46,10 +46,10 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"  # Facultatif si vous avez une région par défaut
 }
-#variable "aws_account_id" {
- # description = "ID du compte AWS"
-  #type        = string
-#}
+variable "aws_account_id" {
+  description = "ID du compte AWS"
+  type        = string
+}
 
 
 # Variable pour les ports d'ingress

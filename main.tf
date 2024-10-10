@@ -8,7 +8,7 @@ module "network" {
 
   security_group_name = "web-traffic-sg"
   #ingress_port        = 8080
-  ingress_ports       = [8080,80]
+  ingress_ports       = [8080,9090,80]
   egress_port         = 0
 }
 
@@ -16,7 +16,7 @@ module "network" {
 module "ecs" {
   source = "./modules/ecs"
 
-  aws_account_id = "637423571897"  # Ajout de l'argument requis
+  #aws_account_id = "637423571897"  # Ajout de l'argument requis
   # Network Inputs
   subnets         = module.network.subnet_ids
   vpc_id          = module.network.vpc_id
@@ -34,6 +34,11 @@ module "ecs" {
     {
       name     = "service1-tg"
       port     = 8080
+      protocol = "HTTP"
+    },
+   {
+      name     = "service2-tg"
+      port     = 9090
       protocol = "HTTP"
     }
   ]

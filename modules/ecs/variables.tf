@@ -56,6 +56,7 @@ variable "ingress_ports" {
 variable "aws_account_id" {
   description = "ID du compte AWS"
   type        = string
+  default     = env("AWS_ACCOUNT_ID")
 }
 #########
 variable "microservices" {

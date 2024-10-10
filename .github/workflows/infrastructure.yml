@@ -35,4 +35,4 @@ jobs:
         run: terraform plan -var-file="./envs/prod/terraform.tfvars" 
 
       - name: Terraform Apply
-        run: terraform apply -var-file="./envs/prod/terraform.tfvars" -var="aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" -auto-approve 
+        run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve 

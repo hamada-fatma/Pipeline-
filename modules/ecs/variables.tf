@@ -53,10 +53,10 @@ variable "ingress_ports" {
   type        = list(number)
   default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
 }
-#variable "aws_account_id" {
- # description = "ID du compte AWS"
-  #type        = string
-#}
+variable "aws_account_id" {
+  description = "ID du compte AWS"
+  type        = string
+}
 #########
 variable "microservices" {
   description = "Liste des microservices avec les informations nécessaires pour créer les définitions de tâches et services ECS"

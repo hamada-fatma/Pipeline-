@@ -1,2 +1,0 @@
-- name: Terraform Apply
-  run: terraform apply -auto-approve -var="aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}"

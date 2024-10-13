@@ -82,3 +82,4 @@ jobs:
             --cluster app-deployment-cluster \
             --service ${{ matrix.service_name }}-ecs-service \
             --force-new-deployment
+

@@ -58,6 +58,32 @@ variable "aws_account_id" {
   type        = string
 }
 #########
+#variable "microservices" {
+ # description = "Liste des microservices avec les informations nécessaires pour créer les définitions de tâches et services ECS"
+  #type = list(object({
+   # app_name       = string
+    #container_port = number
+    #host_port      = number
+    #cpu            = number
+   # memory         = number
+  #}))
+  #default = [
+   # {
+    #  app_name       = "service1"
+     # container_port = 8080
+      #host_port      = 8080
+      #cpu            = 256
+      #memory         = 512
+    #},
+   #{
+    #  app_name       = "service2"
+     # container_port = 9090
+      #host_port      = 9090
+      #cpu            = 256
+      #memory         = 512
+    #}
+  #]
+#}
 variable "microservices" {
   description = "Liste des microservices avec les informations nécessaires pour créer les définitions de tâches et services ECS"
   type = list(object({
@@ -67,20 +93,4 @@ variable "microservices" {
     cpu            = number
     memory         = number
   }))
-  default = [
-    {
-      app_name       = "service1"
-      container_port = 8080
-      host_port      = 8080
-      cpu            = 256
-      memory         = 512
-    },
-   {
-      app_name       = "service2"
-      container_port = 9090
-      host_port      = 9090
-      cpu            = 256
-      memory         = 512
-    }
-  ]
 }

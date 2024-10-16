@@ -74,19 +74,19 @@ target_groups = [
 ]
 
 listener_ports = [80, 8080, 9090]
-microservices = [
-  {
-    app_name       = "service1"
-    container_port = 8080
-    host_port      = 8080
-    cpu            = 256
-    memory         = 512
-  },
-  {
-    app_name       = "service2"
-    container_port = 9090
-    host_port      = 9090
-    cpu            = 256
-    memory         = 512
-  }
-]
+#microservices = [
+ # {
+  #  app_name       = "service1"
+   # container_port = 8080
+    #host_port      = 8080
+    #cpu            = 256
+    #memory         = 512
+  #},
+  #{
+   # app_name       = "service2"
+    #container_port = 9090
+    #host_port      = 9090
+    #cpu            = 256
+    #memory         = 512
+  #}
+#]

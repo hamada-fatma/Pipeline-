@@ -55,13 +55,3 @@ variable "target_groups" {
 variable "listener_ports" {
   type = list(number)
 }
-variable "microservices" {
-  description = "Liste des microservices avec les informations nécessaires pour créer les définitions de tâches et services ECS"
-  type = list(object({
-    app_name       = string
-    container_port = number
-    host_port      = number
-    cpu            = number
-    memory         = number
-  }))
-}

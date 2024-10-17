@@ -29,9 +29,8 @@ variable "egress_port" {
   default     = 0
 }
 
-# # Variable pour les ports d'ingress
 variable "ingress_ports" {
-  description = "Liste des ports autorisés pour l'accès entrant"
+  description = "List of allowed ingress ports"
   type        = list(number)
   default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
 }

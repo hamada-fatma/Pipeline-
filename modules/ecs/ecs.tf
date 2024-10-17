@@ -1,3 +1,77 @@
+# # ECS Cluster
+# resource "aws_ecs_cluster" "this" {
+#   name = "app-deployment-cluster"
+
+#   setting {
+#     name  = "containerInsights"
+#     value = "enabled"
+#   }
+# }
+
+# # IAM Role for ECS Task Execution
+# resource "aws_iam_role" "execution" {
+#   name = var.ecs_task_execution_role_name
+
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole",
+#         Effect = "Allow",
+#         Principal = {
+#           Service = "ecs-tasks.amazonaws.com"
+#         }
+#       },
+#     ]
+#   })
+
+#   managed_policy_arns = [var.execution_role_policy_arn]
+# }
+
+# # IAM Role for ECS Task
+# resource "aws_iam_role" "task" {
+#   name = var.ecs_task_role_name
+
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole",
+#         Effect = "Allow",
+#         Principal = {
+#           Service = "ecs-tasks.amazonaws.com"
+#         }
+#       },
+#     ]
+#   })
+# }
+
+# # Attach Managed Policy to Execution Role
+# resource "aws_iam_role_policy_attachment" "execution_policy" {
+#   role       = aws_iam_role.execution.name
+#   policy_arn = var.execution_role_policy_arn
+# }
+
+
+# resource "aws_lb" "this" {
+#   name               = var.load_balancer_name
+#   internal           = false
+#   load_balancer_type = "application"
+#   security_groups    = [aws_security_group.lb_sg.id] # Utilise le groupe de sécurité du LB
+#   subnets            = var.subnets
+# }
+
+# resource "aws_lb_listener" "http" {
+#   for_each          = aws_lb_target_group.this
+#   load_balancer_arn = aws_lb.this.arn
+#   port              = each.value.port
+#   protocol          = each.value.protocol
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = each.value.arn
+#   }
+# }
 # ECS Cluster
 resource "aws_ecs_cluster" "this" {
   name = "app-deployment-cluster"
@@ -57,7 +131,7 @@ resource "aws_lb" "this" {
   name               = var.load_balancer_name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id] # Utilise le groupe de sécurité du LB
+  security_groups    = [aws_security_group.lb_sg.id] 
   subnets            = var.subnets
 }
 
@@ -65,7 +139,6 @@ resource "aws_lb_listener" "http" {
   for_each          = aws_lb_target_group.this
   load_balancer_arn = aws_lb.this.arn
   port              = each.value.port
-  #port              = 80
   protocol          = each.value.protocol
 
   default_action {
@@ -77,7 +150,6 @@ resource "aws_lb_target_group" "this" {
   for_each    = { for idx, service in var.microservices : service.app_name => service }
   name        = "${each.value.app_name}-tg"
   port        = each.value.container_port
- # port        = 9090
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
@@ -132,32 +204,28 @@ resource "aws_ecs_service" "this" {
     target_group_arn = aws_lb_target_group.this[each.key].arn
     container_name   = each.value.app_name
     container_port   = each.value.container_port
-   #  container_port   = 9090
   }
 
   depends_on = [aws_lb_listener.http]
 }
 
-############
 
 resource "aws_security_group" "lb_sg" {
   name   = "lb_security_group"
-  vpc_id = var.vpc_id  # Utilise la variable vpc_id
+  vpc_id = var.vpc_id  
 
-  # Autorise le trafic entrant sur les ports 80, 8080, et 9090
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 80
+    cidr_blocks = ["0.0.0.0/0"] 
   }
   ingress {
     from_port   = 9090
     to_port     = 9090
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Permet l'accès public sur le port 80
+    cidr_blocks = ["0.0.0.0/0"] 
   }
- 
   egress {
     from_port   = 0
     to_port     = 0
@@ -168,15 +236,14 @@ resource "aws_security_group" "lb_sg" {
 
 resource "aws_security_group" "ecs_sg" {
   name   = "ecs_security_group"
-  vpc_id = var.vpc_id  # Utilisation de la variable vpc_id
-  # Crée une règle d'Ingress pour chaque port dans la liste ingress_ports
+  vpc_id = var.vpc_id 
   dynamic "ingress" {
     for_each = var.ingress_ports
     content {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"] # Autorise l'accès public
+      cidr_blocks = ["0.0.0.0/0"] 
     }
   }
 

@@ -7,7 +7,7 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string
 }
-###############
+
 variable "ecs_task_execution_role_name" {
   description = "IAM role name for ECS task execution"
   type        = string
@@ -42,24 +42,22 @@ variable "listener_ports" {
   type        = list(number)
 }
 variable "aws_region" {
-  description = "Région AWS"
+  description = "AWS region"
   type        = string
-  default     = "us-east-1"  # Facultatif si vous avez une région par défaut
+  default     = "us-east-1" 
 }
 
-# Variable pour les ports d'ingress
 variable "ingress_ports" {
-  description = "Liste des ports autorisés pour l'accès entrant"
+  description = "List of allowed ingress ports"
   type        = list(number)
   default     = [80, 8080, 9090] # Ajoutez les ports nécessaires ici
 }
 variable "aws_account_id" {
-  description = "ID du compte AWS"
+  description = "AWS Account ID"
   type        = string
 }
-#########
 variable "microservices" {
-  description = "Liste des microservices avec les informations nécessaires pour créer les définitions de tâches et services ECS"
+  description = "List of microservices with necessary information to create ECS task definitions and services"
   type = list(object({
     app_name       = string
     container_port = number

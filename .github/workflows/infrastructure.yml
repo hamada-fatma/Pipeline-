@@ -32,7 +32,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var-file="./envs/prod/terraform.tfvars" -lock=false
+        run: terraform plan -var-file="./envs/prod/terraform.tfvars" 
 
       - name: Terraform Apply
-        run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve -lock=false
+        run: terraform apply -var-file="./envs/prod/terraform.tfvars" -auto-approve 

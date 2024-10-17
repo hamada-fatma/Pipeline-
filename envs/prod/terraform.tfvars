@@ -1,4 +1,4 @@
-
+# Network Module Variables
 aws_account_id = "381492099535"  # ID de ton compte AWS 
 
 # Variables réseau

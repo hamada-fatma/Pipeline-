@@ -79,6 +79,5 @@ module "ecs" {
 
   target_groups = var.target_groups
   listener_ports = var.listener_ports
-  #microservices   = var.microservices
 
 }

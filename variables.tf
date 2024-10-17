@@ -63,4 +63,5 @@ variable "microservices" {
     host_port      = number
     cpu            = number
     memory         = number
-  }))}
+  }))
+}

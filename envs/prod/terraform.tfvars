@@ -8,7 +8,7 @@ ingress_ports       = [8080, 9090, 80]
 egress_port         = 0
 
 # ECS Module Variables
-aws_account_id               = "767397685517"
+aws_account_id               = "891377041229"
 ecs_task_execution_role_name = "ecs-app-execution-role"
 ecs_task_role_name           = "ecs-app-task-role"
 execution_role_policy_arn    = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
